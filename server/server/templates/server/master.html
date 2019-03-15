@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block page_title %} {% endblock %}
+    </title>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static '/mainapp/css/index.css' %}" />
+</head>
+
+<body>
+    <table ></table>
+    <div class="page">
+        <header class="page__header">
+            <nav class="page__navigation">
+                <ul class="navigation-list">
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                            Главная
+                        </span>
+                        <a href="{% url 'main:main' %}" class="navigation-list__item-link">
+                        </a>
+                    </li>
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                            О проекте
+                        </span>
+                        <a href="{% url 'main:about' %}" class="navigation-list__item-link">
+                        </a>
+                    </li>
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                            Контакты
+                        </span>
+                        <a href="{% url 'main:contacts' %}" class="navigation-list__item-link">
+                        </a>
+                    </li>
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                            Каталог
+                        </span>
+                        <a href="{% url 'products:main' %}" class="navigation-list__item-link">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="page__content">
+            {% block page_content %} {% endblock %}
+        </div>
+        <footer class="page__footer">
+            <span class="page__copyright">
+                © GeekBrains
+            </span>
+        </footer>
+    </div>
+</body>
+
+</html>
