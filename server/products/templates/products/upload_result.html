@@ -1,0 +1,15 @@
+{% extends 'server/master.html' %}
+
+{% block page_title %}
+Detail page
+{% endblock %}
+
+{% block page_content %}
+<h1>Загружены следующие продукты:</h1>
+<ul>
+{% for item in object %}
+<li>{{ item.name }}</li>
+{% endfor %}
+{% endblock %}
+</ul>
+

@@ -1,0 +1,30 @@
+{% extends 'server/master.html' %}
+
+{% block page_title %}
+Detail page
+{% endblock %}
+
+{% block page_content %}
+<div class="category-detail">
+    <h1 class="product_name">
+        {{ object.name }}
+    </h1>
+</div>
+<h1>Список продуктов данной категории</h1>
+<ul>
+{% for item in product_list %}
+<li class="product_list_item">
+    <span class="product_list_item-name">
+        {{ item.name|title }}
+    </span>
+    <span class="product_list_item-description">
+       {{ item.description }}
+    </span>
+    <span class="product_list_item-cost">
+        {{ item.cost }}
+    </span>
+    <a href="{% url 'products:detail' idx=item.id %}" class="product_list_item-link">Подробнее</a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}

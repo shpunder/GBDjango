@@ -5,5 +5,23 @@ Detail page
 {% endblock %}
 
 {% block page_content %}
-<h1>А это Детаил</h1> 
+<div class="product">
+    <h1 class="product_name">
+        {{ onject.name }}
+    </h1>
+    <span class="product_description">
+        {{ object.description }}
+    </span>
+
+    {% if object.image %}
+    <img src="{{ object.image.url }}">
+    {% else %}
+    Здесь должна быть картинка
+    {% endif %}
+
+    <span class="product_cost">
+        {{ object.cost|default:"Стоимость уточняйте" }}
+
+    </span>
+</div>
 {% endblock %}

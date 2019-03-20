@@ -1,0 +1,17 @@
+
+
+
+{% extends 'server/master.html' %}
+
+{% block page_title %}
+Detail page
+{% endblock %}
+
+{% block page_content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+{% endblock %}
+</ul>

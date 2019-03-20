@@ -5,5 +5,33 @@ Product list page
 {% endblock %}
 
 {% block page_content %}
-<h1>Это продукт лист</h1>
+<h1>
+    Список категорий
+</h1>
+<ul>
+    {% for item in category_list %}
+    <li>
+        <a href="{% url 'products:category' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h1>Список продуктов</h1>
+    <ul class="product_list">
+        {% for item in object_list %}
+        <li class="product_list_item">
+            <span class="product_list_item-name">
+                {{ item.name|title }}
+            </span>
+            <span class="product_list_item-description">
+               {{ item.description }}
+            </span>
+            <span class="product_list_item-cost">
+                {{ item.cost }}
+            </span>
+            <a href="{% url 'products:detail' idx=item.id %}" class="product_list_item-link">Подробнее</a>
+        </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
