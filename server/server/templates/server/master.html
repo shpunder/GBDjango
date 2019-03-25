@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <table ></table>
+    <table></table>
     <div class="page">
         <header class="page__header">
             <nav class="page__navigation">
@@ -51,6 +51,30 @@
                         </span>
                         <a href="{% url 'products:load' %}" class="navigation-list__item-link">
                         </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                            {{ user.first_name|default:'Пользователь' }}
+                        </span>
+                        <a href="{% url 'auth:edit' %}" class="navigation-list__item-link">
+
+                        </a>
+
+                    </li>
+                    {% endif %}
+                    <li class="navigation-list__item">
+                        {% if user.is_authenticated %}
+                        <span class="navigation-list__item-text">
+                            выйти
+                        </span>
+                        <a href="{% url 'auth:logout' %}" class="navigation-list__item-link"></a>
+                        {% else %}
+                        <span class="navigation-list__item-text">
+                            войти
+                        </span>
+                        <a href="{% url 'auth:login' %}" class="navigation-list__item-link"></a>
+                        {% endif %}
                     </li>
                 </ul>
             </nav>
