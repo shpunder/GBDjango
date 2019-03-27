@@ -9,6 +9,7 @@
         {% block page_title %} {% endblock %}
     </title>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static '/mainapp/css/index.css' %}" />
+    {% block page_static %} {% endblock %}
 </head>
 
 <body>
@@ -76,6 +77,17 @@
                         <a href="{% url 'auth:login' %}" class="navigation-list__item-link"></a>
                         {% endif %}
                     </li>
+                    {% if basket_calculate %}
+                    <li class="navigation-list__item">
+                        <span class="navigation-list__item-text">
+                               Кол-во: {{ basket_calculate.count }} 
+                               Сумма:  {{ basket_calculate.sum }} 
+                        </span>
+                        <a href="{% url 'basket:detail' %}" class="navigation-list__item-link">
+                        </a>
+                    </li>
+                    {% endif %}
+                    
                 </ul>
             </nav>
         </header>

@@ -25,7 +25,7 @@ SECRET_KEY = '4!hud^au(402k%niu1il8y-e@^w2sh(gt2ge+2ts)wzp(e3k#b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'mainapp',
     'products',
     'authapp',
+    'basketapp',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +91,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
+LOGIN_URL = '/auth/login/'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

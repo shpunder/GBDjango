@@ -1,37 +1,35 @@
 {% extends 'server/master.html' %}
 
+{% load static %}
+
+{% block page_static %}
+<link rel="stylesheet" href="{% static 'products/css/list.css' %}">
+{% endblock %}
+
 {% block page_title %}
-Product list page
+Product list
 {% endblock %}
 
 {% block page_content %}
+
 <h1>
     Список категорий
 </h1>
 <ul>
     {% for item in category_list %}
     <li>
-        <a href="{% url 'products:category' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
+        <a href="{% url 'categories:category' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
     </li>
     {% endfor %}
 </ul>
 
-<h1>Список продуктов</h1>
-    <ul class="product_list">
-        {% for item in object_list %}
-        <li class="product_list_item">
-            <span class="product_list_item-name">
-                {{ item.name|title }}
-            </span>
-            <span class="product_list_item-description">
-               {{ item.description }}
-            </span>
-            <span class="product_list_item-cost">
-                {{ item.cost }}
-            </span>
-            <a href="{% url 'products:detail' idx=item.id %}" class="product_list_item-link">Подробнее</a>
-        </li>
-        {% endfor %}
-    </ul>
-
+<h1>Product List</h1>
+<div class="products">
+{% for itm in object_list %}
+    {% include 'server/product.html' with image=itm.image name=itm.name description=itm.description cost=itm.cost id=itm.id  %}
+    <div>
+        <a href="{% url 'basket:add' idx=itm.id %}">Купить</a>
+    </div>
+{% endfor %}
+</div>
 {% endblock %}

@@ -1,0 +1,21 @@
+.product {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    color: #444;
+}
+
+.product__name {
+    margin: 0;
+}
+
+.product__description {
+    margin-top: 8px;
+}
+
+.product__cost {
+    margin-top: 16px;
+}
+.current_category {
+    background-color: aqua;
+}

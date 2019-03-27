@@ -1,4 +1,9 @@
 {% extends 'server/master.html' %}
+{% load static %}
+
+{% block page_static %}
+<link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
+{% endblock %}
 
 {% block page_title %}
 Detail page

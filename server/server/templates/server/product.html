@@ -1,0 +1,28 @@
+{% load static %}
+
+<div class="products__item">
+    {% if image %}
+    <img class="products__item-image" src="{{ image.url }}" alt="{{ name }}">
+    {% else %}
+    <img class="products__item-image products__item-image_empty" src="{% static 'products/images/empty.png' %}" alt="empty">
+    {% endif %}
+    <span class="products__item-name">
+        {{ name|default:"По умолчанию"|title }}
+    </span>
+    <span class="products__item-description">
+        {{ description|safe }}
+    </span>
+    {% if cost %}
+    <span class="products__item-cost">
+        {{ cost }}
+    </span>
+    {% else %}
+    <span class="products__item-cost products__item-cost_empty">
+        Значение отсутствует
+    </span>
+    {% endif %}
+    <a href="{% url 'products:detail' idx=id %}" class="products__item-link">
+        Ссылка на {{ name|lower }}
+    </a>
+
+</div>

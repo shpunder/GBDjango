@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProductCategory
+from products.models import ProductCategory
 
 
 class ProductCategoryForm(forms.Form):

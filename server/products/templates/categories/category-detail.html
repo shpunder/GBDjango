@@ -1,4 +1,9 @@
 {% extends 'server/master.html' %}
+{% load static %}
+
+{% block page_static %}
+<link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
+{% endblock %}
 
 {% block page_title %}
 Detail page
@@ -6,9 +11,19 @@ Detail page
 
 {% block page_content %}
 <div class="category-detail">
-    <h1 class="product_name">
-        {{ object.name }}
-    </h1>
+    <ul>
+        {% for item in category_list %}
+        {% if item.id == object.id %}
+        <li>
+            {{ item.name }} (текущая категория)</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'categories:category' idx=item.id %}" class="category_list">{{ item.name }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
 </div>
 <h1>Список продуктов данной категории</h1>
 <ul>
