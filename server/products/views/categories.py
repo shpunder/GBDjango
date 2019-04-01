@@ -26,11 +26,12 @@ def category_create(request):
 
 
 def category_detail(request, idx):
+    obj = get_object_or_404(ProductCategory, id=idx)
     return render(
         request,
-        'categories/category-detail.html',
+        'categories/detail.html',
         {
-            'object': ProductCategory.objects.get(id=idx),
+            'object': obj,
             'category_list': ProductCategory.objects.all(),
             'product_list': Product.objects.filter(category=ProductCategory.objects.get(id=idx))
         }
@@ -43,6 +44,7 @@ def category_update(request, idx):
     if request.method == 'POST':
         form = ProductCategoryModelForm(
             request.POST,
+            files=request.FILES,
             instance=obj
         )
         if form.is_valid():
@@ -68,4 +70,11 @@ def category_delete(request, idx):
         'categories/delete.html',
         {'object': obj}
     )
-    
+
+
+def category_list(request):
+    return render(
+        request,
+        'categories/index.html',
+        {'object_list': ProductCategory.objects.all()}
+    )

@@ -1,0 +1,43 @@
+{% extends 'server/master.html' %}
+{% load static %}
+
+{% block page_title %}
+{{ page_title }}
+{% endblock %}
+{% block page_content %}
+{% for item in basket_items %}
+<ul>
+  <li>{{ item.product.name }}</li>
+  <li>{{ item.product.category.name }}</li>
+  <li>{{ item.product.cost }}</li>
+  <li>
+    <button class="btn btn-round" id={{ item.id }}>
+      Удалить
+    </button>
+  </li>
+</ul>
+{% endfor %}
+
+
+<a href="/">на главную</a>
+
+</div>
+
+<script type="text/javascript">
+  $('.btn-round').on('click', function () {
+    let id = this.id;
+    $.ajax({
+      type: 'GET',
+      url: "/basket/remove/" + id,
+      // data: { 'idx': id },
+      success: function (data) {
+        $('#' + id).html('Удалено');
+      },
+      error: function (error) {
+        console.log('Error', error);
+      }
+    });
+  });
+</script>
+
+{% endblock %}

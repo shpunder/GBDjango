@@ -12,7 +12,7 @@ class Basket(models.Model):
     add_datetime = models.DateTimeField(verbose_name='время', auto_now_add=True)
 
 
-
+    
     def basket_calculate(self, user):
         basket_calculate = {'count': 0, 'sum': 0}
         basket = Basket.objects.filter(user=user)

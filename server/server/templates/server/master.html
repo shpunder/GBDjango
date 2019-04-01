@@ -9,6 +9,7 @@
         {% block page_title %} {% endblock %}
     </title>
     <link rel="stylesheet" type="text/css" media="screen" href="{% static '/mainapp/css/index.css' %}" />
+    <script type="text/javascript" src="{% static '/mainapp/js/jquery.js' %}"></script>
     {% block page_static %} {% endblock %}
 </head>
 
@@ -77,6 +78,7 @@
                         <a href="{% url 'auth:login' %}" class="navigation-list__item-link"></a>
                         {% endif %}
                     </li>
+                    {% if user.is_authenticated %}
                     {% if basket_calculate %}
                     <li class="navigation-list__item">
                         <span class="navigation-list__item-text">
@@ -86,6 +88,7 @@
                         <a href="{% url 'basket:detail' %}" class="navigation-list__item-link">
                         </a>
                     </li>
+                    {% endif %}
                     {% endif %}
                     
                 </ul>
@@ -99,6 +102,8 @@
                 © GeekBrains
             </span>
         </footer>
+        {% block page_scripts %}
+        {% endblock %}
     </div>
 </body>
 

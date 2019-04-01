@@ -18,18 +18,62 @@ Product list
 <ul>
     {% for item in category_list %}
     <li>
-        <a href="{% url 'categories:category' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
+        <a href="{% url 'categories:detail' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
     </li>
     {% endfor %}
 </ul>
 
 <h1>Product List</h1>
 <div class="products">
-{% for itm in object_list %}
+    {% for itm in object_list %}
     {% include 'server/product.html' with image=itm.image name=itm.name description=itm.description cost=itm.cost id=itm.id  %}
-    <div>
-        <a href="{% url 'basket:add' idx=itm.id %}">Купить</a>
-    </div>
-{% endfor %}
+    {% endfor %}
 </div>
+<button id="load-button">Показать все</button>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+    const url = 'http://127.0.0.1:8000/products/api/';
+    const container = document.querySelector('.products');
+    const loadButton = document.querySelector('#load-button');
+
+    const asyncLoadData = () => {
+        fetch(url).then(
+            response => response.json())
+            .then(response => {
+                loadedHtml = ''
+                response.results.map(
+                    item => { loadedHtml += renderProduct(item) }
+                )
+                container.innerHTML = loadedHtml
+            }
+            )
+    };
+
+
+
+    const renderProduct = ({ id, name, image, description, cost }) => (
+        `
+    <div class="products__item">
+        <img class="products__item-image" src="${ image }" alt="${ name }">
+        <span class="products__item-name">
+            ${ name}
+        </span>
+        <span class="products__item-description">
+            ${ description }
+        </span>
+        <span class="products__item-cost">
+            ${ cost }
+        </span>
+        <a href="${ id }" class="products__item-link">
+            Перейти
+        </a>
+    </div>
+    `
+    );
+    
+    loadButton.addEventListener('click', asyncLoadData);
+
+</script>
 {% endblock %}

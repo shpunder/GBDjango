@@ -1,0 +1,13 @@
+{% extends 'server/master.html' %}
+
+{% block page_title %}
+Удаление категории
+{% endblock %}
+
+{% block page_content %}
+<form method="post">
+    {% csrf_token %}
+    <span>Запись {{ object.name }} будет удалена</span>
+    <input type="submit">
+</form>
+{% endblock %}
