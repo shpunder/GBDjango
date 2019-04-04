@@ -21,7 +21,7 @@
         Значение отсутствует
     </span>
     {% endif %}
-    <a href="{% url 'products:detail' idx=id %}" class="products__item-link">
+    <a href="{% url 'products:detail' pk=id %}" class="products__item-link">
         Ссылка на {{ name|lower }}
     </a>
 

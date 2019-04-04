@@ -2,6 +2,11 @@ import json
 # from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
+from django.views.generic import (
+    View, CreateView, UpdateView, DeleteView,
+    ListView, DetailView
+)
 from django.http import JsonResponse
 from products.models import Product, ProductCategory, UploadFileForm
 from products.forms import ProductForm
@@ -25,6 +30,66 @@ def product_rest_list(request):
             }
         )
     return JsonResponse({'results': data})
+
+
+class ProductCreate(CreateView):
+    model = Product
+    fields = ['name', 'image', 'category', 'description', 'cost']
+    template_name = 'categories/create.html'
+    success_url = 'products:main'
+
+    # def get(self, *args, **kwargs):
+    #     return render(
+    #         self.request,
+    #         self.template_name,
+    #         {'form': self.form_class}
+    #     )
+
+    # def post(self, *args, **kwargs):
+    #     form = self.form_class(
+    #         data=self.request.POST,
+    #         files=self.request.FILES
+    #     )
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect(self.success_url)
+
+    #     return render(
+    #         self.request,
+    #         self.template_name,
+    #         {'form': form}
+    #     )
+
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['name', 'image', 'category', 'description', 'cost']
+    template_name = 'categories/update.html'
+    success_url = 'products:main'
+
+
+class ProductDelete(DeleteView):
+    model = Product
+    template_name = 'categories/delete.html'
+    success_url = 'products:main'
+
+
+class ProductList(ListView):
+    model = Product
+    template_name = 'products/index.html'
+
+    def get_context_data(self, *args, **kwargs):
+        obj = Product.objects.all()
+        page_num = self.request.GET.get('page')
+        paginator = Paginator(obj, 2)
+        return {
+            'object': obj,
+            'page_object': paginator.get_page(page_num)
+        }
+
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'categories/detail.html'
 
 
 def product_create(request):
@@ -89,8 +154,6 @@ def product_list(request):
     if request.user.is_authenticated:
         basket_calculate = basket.basket_calculate(request.user)
 
-
-
     return render(
         request,
         'products/index.html',
@@ -117,7 +180,7 @@ def product_detail(request, idx):
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        save_path = 'upload/' # папка для сохранения файлов
+        save_path = 'upload/'  # папка для сохранения файлов
         if form.is_valid():
             # сохранение файла
             with open(save_path+request.FILES['file'].name, 'wb+') as destination:
@@ -137,4 +200,3 @@ def upload_file(request):
     else:
         form = UploadFileForm()
         return render(request, "products/upload_file.html", {'form': form})
-        

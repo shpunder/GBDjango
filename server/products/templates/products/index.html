@@ -18,17 +18,37 @@ Product list
 <ul>
     {% for item in category_list %}
     <li>
-        <a href="{% url 'categories:detail' idx=item.id %}" class="product_list_item-link">{{ item.name }}</a>
+        <a href="{% url 'categories:detail' pk=item.id %}" class="product_list_item-link">{{ item.name }}</a>
     </li>
     {% endfor %}
 </ul>
 
 <h1>Product List</h1>
 <div class="products">
-    {% for itm in object_list %}
+    {% for itm in page_object %}
     {% include 'server/product.html' with image=itm.image name=itm.name description=itm.description cost=itm.cost id=itm.id  %}
     {% endfor %}
 </div>
+<ul class="pagination">
+    {% if page_object.has_previous %}
+    <li>
+        <a href="?page={{ page_object.previous_page_number }}">Back</a>
+    </li>
+    {% endif %}
+    {% if page_object.has_next %}
+    <li>
+        <a href="?page={{ page_object.next_page_number }}">Next</a>
+    </li>
+    {% endif %}
+
+    {% for item in page_object.paginator.page_range %}
+    <li>
+            <a href="?page={{ item }}">{{ item }}</a>
+    </li>
+    {% endfor %}
+
+</ul>
+
 <button id="load-button">Показать все</button>
 {% endblock %}
 
@@ -56,23 +76,23 @@ Product list
     const renderProduct = ({ id, name, image, description, cost }) => (
         `
     <div class="products__item">
-        <img class="products__item-image" src="${ image }" alt="${ name }">
+        <img class="products__item-image" src="${ image}" alt="${name}">
         <span class="products__item-name">
             ${ name}
         </span>
         <span class="products__item-description">
-            ${ description }
+            ${ description}
         </span>
         <span class="products__item-cost">
-            ${ cost }
+            ${ cost}
         </span>
-        <a href="${ id }" class="products__item-link">
+        <a href="${ id}" class="products__item-link">
             Перейти
         </a>
     </div>
     `
     );
-    
+
     loadButton.addEventListener('click', asyncLoadData);
 
 </script>

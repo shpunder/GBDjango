@@ -1,0 +1,13 @@
+.image-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+.image {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
