@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+
     'mainapp',
     'products',
     'authapp',
@@ -86,12 +89,17 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

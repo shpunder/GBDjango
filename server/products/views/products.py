@@ -7,6 +7,13 @@ from django.views.generic import (
     View, CreateView, UpdateView, DeleteView,
     ListView, DetailView
 )
+from django.contrib.auth.decorators import (
+    login_required, user_passes_test
+)
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin, UserPassesTestMixin
+)
+from django.urls import reverse_lazy
 from django.http import JsonResponse
 from products.models import Product, ProductCategory, UploadFileForm
 from products.forms import ProductForm
@@ -67,10 +74,14 @@ class ProductUpdate(UpdateView):
     success_url = 'products:main'
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = 'categories/delete.html'
     success_url = 'products:main'
+    login_url = reverse_lazy('auth:login')
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
 
 class ProductList(ListView):
@@ -101,9 +112,7 @@ def product_create(request):
         )
         if form.is_valid():
             form.save()
-            # ProductCategory.objects.create(
-            #     name=form.cleaned_data.get('name')
-            # )
+            # тут была строка print(request.user.first_name)
             return redirect('products:main')
 
     return render(
@@ -132,14 +141,15 @@ def product_update(request, idx):
         {'form': form}
     )
 
-
+@login_required
+@user_passes_test(lambda user: user.is_superuser)
 def product_delete(request, idx):
     obj = get_object_or_404(Product, id=idx)
 
     if request.method == 'POST':
         obj.delete()
 
-        return redirect('products:main')
+        return redirect('/products/')
     return render(
         request,
         'categories/delete.html',

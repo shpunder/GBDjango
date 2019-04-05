@@ -19,7 +19,7 @@ def login(request):
             return HttpResponseRedirect('/')
 
     content = {'title': title, 'login_form': login_form}
-    return render(request, 'authapp/login.html', content)
+    return render(request, ' ', content)
 
 def logout(request):
     auth.logout(request)
